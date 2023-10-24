@@ -25,7 +25,16 @@ export default function App() {
       console.log(error);
     })();
   }, []);
-  const onPress = () => {
+  const onPress = async () => {
+    const { data } = await supabase.functions.invoke('embed', {
+      body: { input: query },
+    });
+    const { data: movies } = await supabase.rpc('match_movies', {
+      query_embedding: data.embedding,
+      match_threshold: 0.78,
+      match_count: 15,
+    });
+    setMovies(movies);
     setQuery('');
   };
   return (
