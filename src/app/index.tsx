@@ -18,7 +18,7 @@ export default function App() {
       let { data: movies, error } = await supabase
         .from('movies')
         .select('*')
-        .range(0, 25);
+        .range(0, 20);
       if (movies) {
         setMovies(movies);
       }
